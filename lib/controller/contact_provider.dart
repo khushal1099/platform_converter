@@ -9,12 +9,16 @@ class ContactProvider extends ChangeNotifier {
   List<ContactModal> contactlist = [];
   XFile? xFile;
   ImagePicker picker = ImagePicker();
+  XFile? settingxFile;
   final mydate = DateFormat.yMd();
   final mydatetime = DateFormat.yMMMEd();
 
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController chatController = TextEditingController();
+
+  TextEditingController settingnameController = TextEditingController();
+  TextEditingController settingbioController = TextEditingController();
 
   DateTime? selectdate;
   TimeOfDay? selecttime;
