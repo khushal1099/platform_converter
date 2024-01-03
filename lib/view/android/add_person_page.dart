@@ -1,13 +1,15 @@
+import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:platform_converter/controller/contact_provider.dart';
 import 'package:platform_converter/modal/contact_modal.dart';
 import 'package:provider/provider.dart';
 
 class AddPerson extends StatefulWidget {
   final int? index;
-  const AddPerson({super.key, this.index});
+
+  AddPerson({super.key, this.index});
 
   @override
   State<AddPerson> createState() => _AddPersonState();
@@ -15,29 +17,33 @@ class AddPerson extends StatefulWidget {
 
 class _AddPersonState extends State<AddPerson> {
 
+
   @override
   void initState() {
-    var cp = Provider.of<ContactProvider>(context, listen: false);
-
     if (widget.index != null) {
       var cp = Provider.of<ContactProvider>(context, listen: false);
       var contactmodel = cp.contactlist[widget.index!];
       cp.nameController.text = contactmodel.name ?? "";
       cp.phoneController.text = contactmodel.number ?? "";
+      cp.chatController.text = contactmodel.chat ?? "";
       cp.xFile = contactmodel.xFile;
+      cp.selecttime = contactmodel.selecttime;
+      cp.selectdate = contactmodel.selectdate;
     }
     super.initState();
   }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(30),
+        padding: EdgeInsets.all(20),
         child: Consumer<ContactProvider>(
             builder: (context, contactprovider, child) {
           return SingleChildScrollView(
             child: Container(
-              height: MediaQuery.sizeOf(context).height * 0.7,
+              height: MediaQuery.sizeOf(context).height * 0.8,
               width: MediaQuery.sizeOf(context).width * 0.9,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -99,7 +105,8 @@ class _AddPersonState extends State<AddPerson> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(20),
+                    padding:
+                        const EdgeInsets.only(top: 20, left: 20, right: 20),
                     child: TextFormField(
                       controller: contactprovider.chatController,
                       decoration: InputDecoration(
@@ -112,12 +119,67 @@ class _AddPersonState extends State<AddPerson> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 250),
-                    child: Text("Pick Date"),
+                    padding: const EdgeInsets.only(left: 28, top: 20),
+                    child: Row(
+                      children: [
+                        InkWell(
+                          onTap: () async {
+                            contactprovider.selectdate = await showDatePicker(
+                              context: context,
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime(2050),
+                              barrierDismissible: false,
+                            );
+                            contactprovider.refresh();
+                          },
+                          child: Icon(
+                            Icons.calendar_month,
+                            size: 30,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          contactprovider.selectdate != null
+                              ? contactprovider.mydate
+                                  .format(contactprovider.selectdate!)
+                              : "PickDate",
+                          style: TextStyle(fontSize: 25, color: Colors.black54),
+                        ),
+                      ],
+                    ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 246),
-                    child: Text("Pick Time"),
+                    padding:
+                        const EdgeInsets.only(left: 28, top: 20, bottom: 20),
+                    child: Row(
+                      children: [
+                        InkWell(
+                          onTap: () async {
+                            contactprovider.selecttime = await showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay.now(),
+                            );
+
+                            contactprovider.refresh();
+                          },
+                          child: Icon(
+                            Icons.access_time_outlined,
+                            size: 30,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          contactprovider.selecttime != null
+                              ? "${contactprovider.selecttime?.hour}:${contactprovider.selecttime?.minute}"
+                              : "PickTime",
+                          style: TextStyle(fontSize: 25, color: Colors.black54),
+                        ),
+                      ],
+                    ),
                   ),
                   InkWell(
                     child: Container(
@@ -143,13 +205,22 @@ class _AddPersonState extends State<AddPerson> {
                                 name: cp.nameController.text,
                                 number: cp.phoneController.text,
                                 chat: cp.chatController.text,
+                                selectdate: cp.selectdate,
+                                selecttime: cp.selecttime,
                                 xFile: cp.xFile);
 
-                            contactprovider.addcontact(cm);
+                            if (widget.index != null) {
+                              contactprovider.editContact(
+                                  widget.index ?? 0, cm);
+                            } else {
+                              contactprovider.addcontact(cm);
+                              // Provider.of<ContactProvider>(context, listen: false)
+                              //     .save_data_into_shared_preferences();
+                            }
                             contactprovider.reset();
+                            Provider.of<ContactProvider>(context, listen: false)
+                                .refresh();
                             print(contactprovider.contactlist);
-
-                            // Navigator.pushNamed(context, 'chatpage');
                           },
                           child: Text("Save"),
                         ),

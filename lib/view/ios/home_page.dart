@@ -14,34 +14,37 @@ class _Homepage1State extends State<Homepage1> {
   @override
   Widget build(BuildContext context) {
     return Consumer<PlatformProvider>(
-        builder: (context, platformprovider, child) {
-      return CupertinoPageScaffold(
-        backgroundColor: Colors.white,
-        navigationBar: CupertinoNavigationBar(
+      builder: (context, platformprovider, child) {
+        return CupertinoPageScaffold(
           backgroundColor: Colors.white,
-          middle: Text("Platform Converter",style: TextStyle(color: Colors.black),),
-          trailing: CupertinoSwitch(
-            value: platformprovider.isAndroid,
-            onChanged: (value) {
-              // Provider.of<PlatformProvider>(context,listen: false).changeplatform();
-            },
+          navigationBar: CupertinoNavigationBar(
+            backgroundColor: Colors.white,
+            middle: Text(
+              "Platform Converter",
+              style: TextStyle(color: Colors.black),
+            ),
+            trailing: CupertinoSwitch(
+              value: platformprovider.isAndroid,
+              onChanged: (value) {
+                platformprovider.changeplatform();
+              },
+            ),
           ),
-        ),
-        child: CupertinoTabBar(
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.person_add),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.person_add),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.person_add),
-            ),
-          ],
-        ),
-      );
-    });
-    ;
+          child: CupertinoTabBar(
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.person_add),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.person_add),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.person_add),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

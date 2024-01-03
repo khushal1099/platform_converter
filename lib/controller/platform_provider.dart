@@ -7,4 +7,5 @@ class PlatformProvider extends ChangeNotifier {
     isAndroid = !isAndroid;
     notifyListeners();
   }
+
 }

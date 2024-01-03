@@ -1,15 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:platform_converter/controller/platform_provider.dart';
-import 'package:platform_converter/view/android/call_page.dart';
-import 'package:platform_converter/view/android/chat_page.dart';
 import 'package:platform_converter/view/android/home_page.dart';
-import 'package:platform_converter/view/android/setting_page.dart';
 import 'package:platform_converter/view/ios/home_page.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'controller/contact_provider.dart';
 
-void main() {
+
+Future<void> main() async {
   runApp(MyApp());
 }
 
@@ -33,17 +32,19 @@ class _MyAppState extends State<MyApp> {
         ),
       ],
       builder: (context, child) {
-        var isAndroid = Provider.of<PlatformProvider>(context,listen: false).isAndroid == false;
-        if (isAndroid) {
+        var android = Provider.of<PlatformProvider>(context,listen: false).isAndroid;
+        if (android == false) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            initialRoute: '/',
-            routes: {
-              '/':(context) => Homepage(),
-              'chatpage':(context) => ChatPage(),
-              'callpage':(context) => CallPage(),
-              'settings':(context) => SettingPage()
-            },
+            home: Homepage(),
+            // initialRoute: '/',
+            // routes: {
+            //   '/':(context) => Homepage(),
+            //   'addcontactpage':(context) => AddPerson(index: ),
+            //   'chatpage':(context) => ChatPage(),
+            //   'callpage':(context) => CallPage(),
+            //   'settings':(context) => SettingPage()
+            // },
           );
         } else {
           return CupertinoApp(
