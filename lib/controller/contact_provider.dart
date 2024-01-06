@@ -7,6 +7,7 @@ import 'package:platform_converter/modal/contact_modal.dart';
 
 class ContactProvider extends ChangeNotifier {
   List<ContactModal> contactlist = [];
+  List<ContactModal> chatlist = [];
   XFile? xFile;
   ImagePicker picker = ImagePicker();
   XFile? settingxFile;
@@ -23,9 +24,11 @@ class ContactProvider extends ChangeNotifier {
   DateTime? selectdate;
   TimeOfDay? selecttime;
 
+  int index = 0;
 
   void addcontact(ContactModal contact) {
     contactlist.add(contact);
+    chatlist.add(contact);
     notifyListeners();
   }
 
@@ -50,16 +53,18 @@ class ContactProvider extends ChangeNotifier {
 
   void editContact(int index, ContactModal contact) {
     contactlist[index] = contact;
+    chatlist[index] = contact;
     notifyListeners();
   }
 
   void refresh() {
-    notifyListeners();
+    notifyListeners(
+    );
   }
 
-  void deleteContact(int index) {
-    contactlist.removeAt(index);
-    notifyListeners();
-  }
-
+// void deleteContact(int index) {
+//   contactlist.removeAt(index);
+//   chatlist.removeAt(index);
+//   notifyListeners();
+// }
 }

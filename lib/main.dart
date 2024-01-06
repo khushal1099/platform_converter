@@ -1,19 +1,19 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:platform_converter/controller/platform_provider.dart';
 import 'package:platform_converter/controller/setting_provider.dart';
-import 'package:platform_converter/modal/setting_modal.dart';
+import 'package:platform_converter/controller/theme_provider.dart';
 import 'package:platform_converter/view/android/home_page.dart';
 import 'package:platform_converter/view/ios/home_page.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'controller/contact_provider.dart';
 
+late SharedPreferences prefs;
 
-Future<void> main() async {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  prefs = await SharedPreferences.getInstance();
   runApp(MyApp());
 }
 
@@ -38,15 +38,28 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (context) => SettingProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) =>
+          ThemeProvider()
+            ..getTheme(),
+        ),
       ],
       builder: (context, child) {
-        var android = Provider
-            .of<PlatformProvider>(context, listen: false)
-            .isAndroid;
+        var android =
+            Provider
+                .of<PlatformProvider>(context, listen: false)
+                .isAndroid;
         if (android == false) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            home: Homepage(),
+          return Consumer<ThemeProvider>(builder: (context, themeprovider, child) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              home: Homepage(),
+              theme: ThemeData.light(),
+              darkTheme: ThemeData.dark(),
+              themeMode: themeprovider.thememode,
+            );
+          },
+
           );
         } else {
           return CupertinoApp(

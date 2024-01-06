@@ -30,9 +30,9 @@ class _ChatPageState extends State<ChatPage> {
       body:
           Consumer<ContactProvider>(builder: (context, contactprovider, child) {
         return ListView.separated(
-          itemCount: contactprovider.contactlist.length,
+          itemCount: contactprovider.chatlist.length,
           itemBuilder: (context, index) {
-            var contactModal = contactprovider.contactlist[index];
+            var contactModal = contactprovider.chatlist[index];
             return InkWell(
               onTap: () {
                 var cp = Provider.of<ContactProvider>(context, listen: false);
@@ -82,7 +82,8 @@ class _ChatPageState extends State<ChatPage> {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    contactprovider.deleteContact(index);
+                                    contactprovider.chatlist.removeAt(index);
+                                    contactprovider.refresh();
                                   },
                                   child: Icon(Icons.delete),
                                 ),
@@ -127,8 +128,8 @@ class _ChatPageState extends State<ChatPage> {
                 ),
                 title: Text(contactModal.name ?? ""),
                 subtitle: Text(contactModal.chat ?? ""),
-                trailing: Text(
-                    "${contactModal.selectdate?.day}-${contactModal.selectdate?.month}-${contactModal.selectdate?.year}/${contactModal.selecttime?.hour}:${contactModal.selecttime?.minute}"),
+                trailing: Text( contactModal.selectdate != null && contactModal.selecttime != null ?
+                    "${contactModal.selectdate?.day}-${contactModal.selectdate?.month}-${contactModal.selectdate?.year}/${contactModal.selecttime?.hour}:${contactModal.selecttime?.minute}" : " ")
               ),
             );
           },
