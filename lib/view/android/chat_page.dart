@@ -15,7 +15,6 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -35,14 +34,12 @@ class _ChatPageState extends State<ChatPage> {
             var contactModal = contactprovider.contactlist[index];
             return InkWell(
               onTap: () {
-                var cp = Provider.of<ContactProvider>(context, listen: false);
-
                 showBottomSheet(
                   context: context,
                   builder: (context) {
                     return Container(
-                      height: MediaQuery.sizeOf(context).height * 0.3,
-                      width: MediaQuery.sizeOf(context).width * 1,
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      width: MediaQuery.of(context).size.width * 1,
                       color: Colors.grey,
                       child: Column(
                         children: [
@@ -75,42 +72,63 @@ class _ChatPageState extends State<ChatPage> {
                               style: TextStyle(fontWeight: FontWeight.w500),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    contactprovider.contactlist.removeAt(index);
-                                    contactprovider.refresh();
-                                  },
-                                  child: Icon(Icons.delete),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    ContactModal cm = ContactModal(
-                                        name: cp.nameController.text,
-                                        number: cp.phoneController.text,
-                                        chat: cp.chatController.text,
-                                        selectdate: cp.selectdate,
-                                        selecttime: cp.selecttime,
-                                        xFile: cp.xFile);
-
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => AddPerson(
-                                          index: index,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: Icon(Icons.edit),
-                                ),
-                              ],
-                            ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.010,
                           ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  contactprovider.contactlist.removeAt(index);
+                                  Navigator.pop(context);
+                                  contactprovider.refresh();
+                                },
+                                child: Icon(Icons.delete),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.010,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => AddPerson(
+                                        index: index,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Icon(Icons.edit),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: InkWell(
+                              onTap: () {
+                                 Navigator.pop(context);
+                              },
+                              child: Container(
+                                height: 40,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.grey,
+                                        spreadRadius: 1,
+                                        blurRadius: 15),
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Text("Cancel"),
+                                ),
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     );
@@ -118,19 +136,21 @@ class _ChatPageState extends State<ChatPage> {
                 );
               },
               child: ListTile(
-                leading: CircleAvatar(
-                  backgroundImage: contactModal.xFile != null
-                      ? FileImage(
-                          File(contactModal.xFile?.path ?? ""),
-                        )
-                      : null,
-                  child: contactModal.xFile == null ? Icon(Icons.person) : null,
-                ),
-                title: Text(contactModal.name ?? ""),
-                subtitle: Text(contactModal.chat ?? ""),
-                trailing: Text( contactModal.selectdate != null && contactModal.selecttime != null ?
-                    "${contactModal.selectdate?.day}-${contactModal.selectdate?.month}-${contactModal.selectdate?.year}/${contactModal.selecttime?.hour}:${contactModal.selecttime?.minute}" : " ")
-              ),
+                  leading: CircleAvatar(
+                    backgroundImage: contactModal.xFile != null
+                        ? FileImage(
+                            File(contactModal.xFile?.path ?? ""),
+                          )
+                        : null,
+                    child:
+                        contactModal.xFile == null ? Icon(Icons.person) : null,
+                  ),
+                  title: Text(contactModal.name ?? ""),
+                  subtitle: Text(contactModal.chat ?? ""),
+                  trailing: Text(contactModal.selectdate != null &&
+                          contactModal.selecttime != null
+                      ? "${contactModal.selectdate?.day}-${contactModal.selectdate?.month}-${contactModal.selectdate?.year}/${contactModal.selecttime?.hour}:${contactModal.selecttime?.minute}"
+                      : " ")),
             );
           },
           separatorBuilder: (BuildContext context, int index) {

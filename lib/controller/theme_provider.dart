@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:platform_converter/main.dart';
 
 class ThemeProvider extends ChangeNotifier {

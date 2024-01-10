@@ -22,8 +22,6 @@ class SettingProvider extends ChangeNotifier {
     prefs.setString('bio', settingbio);
     prefs.setString('namecontrolle', nameController.text);
     prefs.setString('biocontroller', bioController.text);
-    String filepath = settingxFile?.path??"";
-    prefs.setString('xfile', filepath);
     notifyListeners();
   }
 
@@ -32,10 +30,6 @@ class SettingProvider extends ChangeNotifier {
     prefs.getString('bio');
     prefs.getString('namecontroller');
     prefs.getString('biocontroller');
-    String filepath = prefs.getString('xfile')??"";
-    if(filepath.isNotEmpty) {
-      settingxFile = XFile(filepath);
-    }
     notifyListeners();
   }
 

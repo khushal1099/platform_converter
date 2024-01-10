@@ -62,8 +62,8 @@ class _MyAppState extends State<MyApp> {
                   home: Homepage1(),
                   theme: CupertinoThemeData(
                       brightness: themeprovider.currentTheme
-                          ? Brightness.light
-                          : Brightness.dark),
+                          ? Brightness.dark
+                          : Brightness.light),
                 );
               });
             }

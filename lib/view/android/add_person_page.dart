@@ -112,6 +112,8 @@ class _AddPersonState extends State<AddPerson> {
                             validator: (value) {
                               if (value?.isEmpty ?? false) {
                                 return "Enter Your Number";
+                              } else if (value?.length != 10) {
+                                return "Enter Valid Phone Number";
                               } else {
                                 return null;
                               }
@@ -207,6 +209,50 @@ class _AddPersonState extends State<AddPerson> {
                           ),
                         ),
                         InkWell(
+                          onTap: () {
+                            var cp = Provider.of<ContactProvider>(context,
+                                listen: false);
+
+                            ContactModal cm = ContactModal(
+                                name: cp.nameController.text,
+                                number: cp.phoneController.text,
+                                chat: cp.chatController.text,
+                                selectdate: cp.selectdate,
+                                selecttime: cp.selecttime,
+                                xFile: cp.xFile);
+
+                            if (formkey.currentState?.validate() ?? false) {
+                              FocusScope.of(context)
+                                  .unfocus(); // For keyboard Close
+                              formkey.currentState?.save();
+                              if (cp.selectdate == null &&
+                                  cp.selecttime == null) {
+                                final snackBar = SnackBar(
+                                  content: Text('Pick Date & Time Please !!'),
+                                  duration: Duration(
+                                      seconds:
+                                          2), // You can customize the duration
+                                );
+
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              } else if (widget.index != null) {
+                                contactprovider.editContact(
+                                    widget.index ?? 0, cm);
+                                contactprovider.reset();
+                              } else {
+                                contactprovider.addcontact(cm);
+                                final snackBar = SnackBar(
+                                  content: Text('Contact Saved Successfully'),
+                                  duration: Duration(seconds: 3),
+                                );
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                contactprovider.reset();
+                              }
+                            }
+                            Provider.of<ContactProvider>(context, listen: false)
+                                .refresh();
+                          },
                           child: Container(
                             height: 40,
                             width: 100,
@@ -221,44 +267,10 @@ class _AddPersonState extends State<AddPerson> {
                               ],
                             ),
                             child: Center(
-                              child: InkWell(
-                                onTap: () {
-                                  var cp = Provider.of<ContactProvider>(context,
-                                      listen: false);
-
-                                  ContactModal cm = ContactModal(
-                                      name: cp.nameController.text,
-                                      number: cp.phoneController.text,
-                                      chat: cp.chatController.text,
-                                      selectdate: cp.selectdate,
-                                      selecttime: cp.selecttime,
-                                      xFile: cp.xFile);
-
-                                  if (formkey.currentState?.validate() ??
-                                      false) {
-                                    FocusScope.of(context)
-                                        .unfocus(); // For keyboard Close
-                                    formkey.currentState?.save();
-                                    if (widget.index != null) {
-                                      contactprovider.editContact(
-                                          widget.index ?? 0, cm);
-                                    } else {
-                                      contactprovider.addcontact(cm);
-                                    }
-                                    Provider.of<ContactProvider>(context,
-                                            listen: false)
-                                        .index = 1;
-                                  }
-                                  contactprovider.reset();
-                                  Provider.of<ContactProvider>(context,
-                                          listen: false)
-                                      .refresh();
-                                },
-                                child: Text("Save"),
-                              ),
+                              child: Text("Save"),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),

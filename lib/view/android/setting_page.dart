@@ -260,26 +260,6 @@ class _SettingPageState extends State<SettingPage> {
                         padding: const EdgeInsets.only(left: 180),
                         child: Consumer<ThemeProvider>(
                           builder: (context,themeprovider,child) {
-                            // return DropdownButton(
-                            //   value: themeprovider.currentTheme,
-                            //   items: [
-                            //     DropdownMenuItem(
-                            //       child: Text("Light"),
-                            //       value: 'light',
-                            //     ),
-                            //     DropdownMenuItem(
-                            //       child: Text("Dark"),
-                            //       value: 'dark',
-                            //     ),
-                            //     DropdownMenuItem(
-                            //       child: Text("System"),
-                            //       value: 'system',
-                            //     ),
-                            //   ],
-                            //   onChanged: (String? value) {
-                            //     themeprovider.changeTheme(value ?? 'system');
-                            //   },
-                            // );
                             return Switch(
                               value: themeprovider.currentTheme,
                               onChanged: (bool value) {

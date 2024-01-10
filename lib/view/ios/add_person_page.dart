@@ -50,9 +50,10 @@ class _AddPerson_IOSState extends State<AddPerson_IOS> {
                     ],
                     color: CupertinoColors.white,
                     borderRadius: BorderRadius.circular(20)),
-                child: SingleChildScrollView(
-                  child: Form(
-                    key: formkey,
+                child: Form(
+                  key: formkey,
+                  child: SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       // mainAxisAlignment: MainAxisAlignment.center,
@@ -79,6 +80,7 @@ class _AddPerson_IOSState extends State<AddPerson_IOS> {
                         Padding(
                           padding: const EdgeInsets.only(right: 25, top: 20),
                           child: CupertinoTextFormFieldRow(
+
                             controller: contactprovider.nameController,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
@@ -263,8 +265,10 @@ class _AddPerson_IOSState extends State<AddPerson_IOS> {
                                   if (widget.index != null) {
                                     contactprovider.editContact(
                                         widget.index ?? 0, cm);
+                                    contactprovider.reset();
                                   } else {
                                     contactprovider.addcontact(cm);
+                                    SaveConfirmDialog(context);
                                     contactprovider.reset();
                                   }
                                 }
