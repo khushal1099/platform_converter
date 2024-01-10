@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:platform_converter/controller/platform_provider.dart';
+import 'package:platform_converter/view/ios/add_person_page.dart';
+import 'package:platform_converter/view/ios/call_page.dart';
+import 'package:platform_converter/view/ios/chat_page.dart';
+import 'package:platform_converter/view/ios/settings_page.dart';
 import 'package:provider/provider.dart';
 
 class Homepage1 extends StatefulWidget {
@@ -16,32 +19,64 @@ class _Homepage1State extends State<Homepage1> {
     return Consumer<PlatformProvider>(
       builder: (context, platformprovider, child) {
         return CupertinoPageScaffold(
-          backgroundColor: Colors.white,
-          navigationBar: CupertinoNavigationBar(
-            backgroundColor: Colors.white,
-            middle: Text(
-              "Platform Converter",
-              style: TextStyle(color: Colors.black),
+          child: CupertinoTabScaffold(
+            tabBar: CupertinoTabBar(
+              items: [
+                BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.person_add),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.chat_bubble_2),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.phone),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.settings),
+                ),
+              ],
             ),
-            trailing: CupertinoSwitch(
-              value: platformprovider.isAndroid,
-              onChanged: (value) {
-                platformprovider.changeplatform();
-              },
-            ),
-          ),
-          child: CupertinoTabBar(
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.person_add),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.person_add),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.person_add),
-              ),
-            ],
+            tabBuilder: (context, index) {
+              return CupertinoTabView(
+                builder: (context) {
+                  return CupertinoPageScaffold(
+                    navigationBar: CupertinoNavigationBar(
+                      middle: Text(
+                        "Platform Converter",
+                        style:
+                            TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                      trailing: CupertinoSwitch(
+                        value: platformprovider.isAndroid,
+                        onChanged: (bool value) {
+                          print(value);
+                          platformprovider.changeplatform();
+                        },
+                      ),
+                    ),
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 80,
+                          ),
+                          IndexedStack(
+                            index: index,
+                            children: [
+                              AddPerson_IOS(),
+                              ChatPage_IOS(),
+                              CallPage_IOS(),
+                              SettingsPage_IOS(),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
           ),
         );
       },

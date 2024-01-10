@@ -1,27 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:platform_converter/main.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  String currentTheme = 'system';
+  bool currentTheme = false;
 
-  ThemeMode get thememode {
-    if (currentTheme == 'light') {
+  ThemeMode? get thememode {
+    if (currentTheme == false) {
       return ThemeMode.light;
-    } else if (currentTheme == 'dark') {
+    } else if (currentTheme == true) {
       return ThemeMode.dark;
-    } else
-      return ThemeMode.system;
+    }
+    return null;
   }
 
-  void changeTheme(String theme) {
-    prefs.setString('theme', theme);
+  void changeTheme(bool theme) {
+    prefs.setBool('theme', theme);
     currentTheme = theme;
     notifyListeners();
   }
 
   void getTheme() {
-    currentTheme = prefs.getString('theme') ?? 'system';
+    currentTheme = prefs.getBool('theme') ?? false;
     notifyListeners();
   }
+
 }

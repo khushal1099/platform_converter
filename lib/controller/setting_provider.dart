@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:platform_converter/main.dart';
 
 class SettingProvider extends ChangeNotifier {
   bool isSetting = false;
@@ -8,11 +9,33 @@ class SettingProvider extends ChangeNotifier {
   XFile? settingxFile;
   ImagePicker picker = ImagePicker();
 
-  String? settingbio;
-  String? settingname;
+  String settingbio = prefs.getString('bio') ?? 'Update Your Profile';
+  String settingname = prefs.getString('name') ?? 'Profile';
 
   void changesetting() {
     isSetting = !isSetting;
+    notifyListeners();
+  }
+
+  void setsettingdata() {
+    prefs.setString('name', settingname);
+    prefs.setString('bio', settingbio);
+    prefs.setString('namecontrolle', nameController.text);
+    prefs.setString('biocontroller', bioController.text);
+    String filepath = settingxFile?.path??"";
+    prefs.setString('xfile', filepath);
+    notifyListeners();
+  }
+
+  void getsettingdata() {
+    prefs.getString('name');
+    prefs.getString('bio');
+    prefs.getString('namecontroller');
+    prefs.getString('biocontroller');
+    String filepath = prefs.getString('xfile')??"";
+    if(filepath.isNotEmpty) {
+      settingxFile = XFile(filepath);
+    }
     notifyListeners();
   }
 
@@ -27,8 +50,8 @@ class SettingProvider extends ChangeNotifier {
 
   void clear(){
     settingxFile = null;
-    settingname = null;
-    settingbio= null;
+    settingname = '';
+    settingbio= '';
     notifyListeners();
   }
 

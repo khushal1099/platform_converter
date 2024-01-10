@@ -30,9 +30,9 @@ class _ChatPageState extends State<ChatPage> {
       body:
           Consumer<ContactProvider>(builder: (context, contactprovider, child) {
         return ListView.separated(
-          itemCount: contactprovider.chatlist.length,
+          itemCount: contactprovider.contactlist.length,
           itemBuilder: (context, index) {
-            var contactModal = contactprovider.chatlist[index];
+            var contactModal = contactprovider.contactlist[index];
             return InkWell(
               onTap: () {
                 var cp = Provider.of<ContactProvider>(context, listen: false);
@@ -82,7 +82,7 @@ class _ChatPageState extends State<ChatPage> {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    contactprovider.chatlist.removeAt(index);
+                                    contactprovider.contactlist.removeAt(index);
                                     contactprovider.refresh();
                                   },
                                   child: Icon(Icons.delete),

@@ -39,37 +39,36 @@ class _MyAppState extends State<MyApp> {
           create: (context) => SettingProvider(),
         ),
         ChangeNotifierProvider(
-          create: (context) =>
-          ThemeProvider()
-            ..getTheme(),
+          create: (context) => ThemeProvider()..getTheme(),
         ),
       ],
       builder: (context, child) {
-        var android =
-            Provider
-                .of<PlatformProvider>(context, listen: false)
-                .isAndroid;
-        if (android == false) {
-          return Consumer<ThemeProvider>(builder: (context, themeprovider, child) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              home: Homepage(),
-              theme: ThemeData.light(),
-              darkTheme: ThemeData.dark(),
-              themeMode: themeprovider.thememode,
-            );
-          },
 
-          );
-        } else {
-          return CupertinoApp(
-            debugShowCheckedModeBanner: false,
-            initialRoute: '/',
-            routes: {
-              '/': (p0) => Homepage1(),
-            },
-          );
-        }
+        return Consumer2<PlatformProvider,ThemeProvider>(
+          builder: (context, platformProvider,themeprovider, child) {
+            if (platformProvider.isAndroid == false) {
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                home: Homepage(),
+                theme: ThemeData.light(),
+                darkTheme: ThemeData.dark(),
+                themeMode: themeprovider.thememode,
+              );
+            } else {
+              return Consumer<ThemeProvider>(
+                  builder: (context, themeprovider, child) {
+                return CupertinoApp(
+                  debugShowCheckedModeBanner: false,
+                  home: Homepage1(),
+                  theme: CupertinoThemeData(
+                      brightness: themeprovider.currentTheme
+                          ? Brightness.light
+                          : Brightness.dark),
+                );
+              });
+            }
+          },
+        );
       },
     );
   }
