@@ -15,7 +15,8 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 Android Screenshots
-![ANDROID_Homepage](https://github.com/khushal1099/platform_converter/assets/138639130/ddfa2218-6a5f-46d2-a58a-606ee2d59f4d)![ANDROID_Chatpage](https://github.com/khushal1099/platform_converter/assets/138639130/6155fdd2-efe8-46fb-bae6-8bf691f7a422)
+<img src="https://github.com/khushal1099/platform_converter/assets/138639130/ddfa2218-6a5f-46d2-a58a-606ee2d59f4d" width="200" height="400">
+![ANDROID_Chatpage](https://github.com/khushal1099/platform_converter/assets/138639130/6155fdd2-efe8-46fb-bae6-8bf691f7a422)
 ![ANDROID_Chatpage_with_showBottomSheet](https://github.com/khushal1099/platform_converter/assets/138639130/094461f6-48a4-43fe-8198-9b83f8eb0042)
 ![ANDROID_Callpage](https://github.com/khushal1099/platform_converter/assets/138639130/12bfeb4d-66b8-4227-bb27-4468899741bd)
 ![ANDROID_Settingpage](https://github.com/khushal1099/platform_converter/assets/138639130/c70794bc-0910-4680-a98f-32f0fc4a3bc5)
