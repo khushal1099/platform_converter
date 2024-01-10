@@ -35,3 +35,12 @@ samples, guidance on mobile development, and a full API reference.
 <img src="https://github.com/khushal1099/platform_converter/assets/138639130/beb1e24f-36f4-4727-89fc-51d0eac2856c" width="200" height="400">
 <img src="https://github.com/khushal1099/platform_converter/assets/138639130/434213fa-8648-4bd1-b51f-9ff1249e3d70" width="200" height="400">
 
+## How to Use
+
+1. Clone the repository.
+2. Follow the installation instructions in the project documentation.
+3. Run the app on your preferred platform (Android/iOS).
+
+Feel free to explore and contribute to the project! If you encounter any issues or have suggestions, please open an issue.
+
+Happy coding!
