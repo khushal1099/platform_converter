@@ -32,7 +32,6 @@ class _ChatPage_IOSState extends State<ChatPage_IOS> {
                           context: context,
                           builder: (context) => Container(
                             height: 350,
-                            width: MediaQuery.of(context).size.width,
                             color: CupertinoColors.white,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,

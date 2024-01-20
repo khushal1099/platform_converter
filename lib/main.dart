@@ -4,7 +4,9 @@ import 'package:platform_converter/controller/platform_provider.dart';
 import 'package:platform_converter/controller/setting_provider.dart';
 import 'package:platform_converter/controller/theme_provider.dart';
 import 'package:platform_converter/view/android/home_page.dart';
+import 'package:platform_converter/view/android/splash_screen.dart';
 import 'package:platform_converter/view/ios/home_page.dart';
+import 'package:platform_converter/view/ios/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'controller/contact_provider.dart';
@@ -49,7 +51,7 @@ class _MyAppState extends State<MyApp> {
             if (platformProvider.isAndroid == false) {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
-                home: Homepage(),
+                home: SplashScreen(),
                 theme: ThemeData.light(),
                 darkTheme: ThemeData.dark(),
                 themeMode: themeprovider.thememode,
@@ -59,7 +61,7 @@ class _MyAppState extends State<MyApp> {
                   builder: (context, themeprovider, child) {
                 return CupertinoApp(
                   debugShowCheckedModeBanner: false,
-                  home: Homepage1(),
+                  home: SplashScreen_IOS(),
                   theme: CupertinoThemeData(
                       brightness: themeprovider.currentTheme
                           ? Brightness.dark

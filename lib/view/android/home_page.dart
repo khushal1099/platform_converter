@@ -26,7 +26,9 @@ class _HomepageState extends State<Homepage> {
             ? Homepage1()
             : Scaffold(
                 appBar: AppBar(
+                  leading: SizedBox.shrink(),
                   title: Text("Platform Converter"),
+                  centerTitle: true,
                   actions: [
                     Switch(
                       value: platformprovider.isAndroid,

@@ -39,8 +39,8 @@ class _AddPerson_IOSState extends State<AddPerson_IOS> {
             padding: const EdgeInsets.only(top: 50),
             child: Center(
               child: Container(
-                height: MediaQuery.sizeOf(context).height * 0.7,
-                width: MediaQuery.sizeOf(context).width * 0.8,
+                height: 610,
+                width: 329.14,
                 decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -53,7 +53,6 @@ class _AddPerson_IOSState extends State<AddPerson_IOS> {
                 child: Form(
                   key: formkey,
                   child: SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       // mainAxisAlignment: MainAxisAlignment.center,
@@ -80,7 +79,6 @@ class _AddPerson_IOSState extends State<AddPerson_IOS> {
                         Padding(
                           padding: const EdgeInsets.only(right: 25, top: 20),
                           child: CupertinoTextFormFieldRow(
-
                             controller: contactprovider.nameController,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
@@ -245,7 +243,7 @@ class _AddPerson_IOSState extends State<AddPerson_IOS> {
                             onPressed: () {
                               var cp = Provider.of<ContactProvider>(context,
                                   listen: false);
-
+                    
                               ContactModal cm = ContactModal(
                                   name: cp.nameController.text,
                                   number: cp.phoneController.text,
@@ -253,7 +251,7 @@ class _AddPerson_IOSState extends State<AddPerson_IOS> {
                                   selectdate: cp.selectdate,
                                   selecttime: cp.selecttime,
                                   xFile: cp.xFile);
-
+                    
                               if (formkey.currentState?.validate() ?? false) {
                                 FocusScope.of(context)
                                     .unfocus(); // For keyboard Close

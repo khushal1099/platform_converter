@@ -18,66 +18,54 @@ class _Homepage1State extends State<Homepage1> {
   Widget build(BuildContext context) {
     return Consumer<PlatformProvider>(
       builder: (context, platformprovider, child) {
-        return CupertinoPageScaffold(
-          child: CupertinoTabScaffold(
-            tabBar: CupertinoTabBar(
-              items: [
-                BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.person_add),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.chat_bubble_2),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.phone),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.settings),
-                ),
-              ],
-            ),
-            tabBuilder: (context, index) {
-              return CupertinoTabView(
-                builder: (context) {
-                  return CupertinoPageScaffold(
-                    navigationBar: CupertinoNavigationBar(
-                      middle: Text(
-                        "Platform Converter",
-                        style:
-                            TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
-                      trailing: CupertinoSwitch(
-                        value: platformprovider.isAndroid,
-                        onChanged: (bool value) {
-                          print(value);
-                          platformprovider.changeplatform();
-                        },
-                      ),
-                    ),
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 80,
-                          ),
-                          IndexedStack(
-                            index: index,
-                            children: [
-                              AddPerson_IOS(),
-                              ChatPage_IOS(),
-                              CallPage_IOS(),
-                              SettingsPage_IOS(),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              );
-            },
+        return CupertinoTabScaffold(
+          tabBar: CupertinoTabBar(
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.person_add),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.chat_bubble_2),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.phone),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.settings),
+              ),
+            ],
           ),
+          tabBuilder: (context, index) {
+            return CupertinoTabView(
+              builder: (context) {
+                return CupertinoPageScaffold(
+                  navigationBar: CupertinoNavigationBar(
+                    middle: Text(
+                      "Platform Converter",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
+                    trailing: CupertinoSwitch(
+                      value: platformprovider.isAndroid,
+                      onChanged: (bool value) {
+                        print(value);
+                        platformprovider.changeplatform();
+                      },
+                    ),
+                  ),
+                  child: IndexedStack(
+                    index: index,
+                    children: [
+                      AddPerson_IOS(),
+                      ChatPage_IOS(),
+                      CallPage_IOS(),
+                      SettingsPage_IOS(),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
         );
       },
     );
